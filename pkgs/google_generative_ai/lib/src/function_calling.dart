@@ -32,13 +32,14 @@ final class Tool {
 
   final CodeExecution? codeExecution;
 
-  Tool({this.functionDeclarations, this.codeExecution});
+  final bool googleSearch;
+  Tool({this.functionDeclarations, this.codeExecution, this.googleSearch = false});
 
   Map<String, Object> toJson() => {
         if (functionDeclarations case final functionDeclarations?)
-          'functionDeclarations':
-              functionDeclarations.map((f) => f.toJson()).toList(),
+          'functionDeclarations': functionDeclarations.map((f) => f.toJson()).toList(),
         if (codeExecution != null) 'codeExecution': <String, Object?>{},
+        if (googleSearch == true) 'google_search': <String, Object?>{},
       };
 }
 
@@ -82,8 +83,7 @@ final class ToolConfig {
   ToolConfig({this.functionCallingConfig});
 
   Map<String, Object?> toJson() => {
-        if (functionCallingConfig case final config?)
-          'functionCallingConfig': config.toJson(),
+        if (functionCallingConfig case final config?) 'functionCallingConfig': config.toJson(),
       };
 }
 
@@ -283,12 +283,8 @@ final class Schema {
         if (enumValues case final enumValues?) 'enum': enumValues,
         if (items case final items?) 'items': items.toJson(),
         if (properties case final properties?)
-          'properties': {
-            for (final MapEntry(:key, :value) in properties.entries)
-              key: value.toJson()
-          },
-        if (requiredProperties case final requiredProperties?)
-          'required': requiredProperties
+          'properties': {for (final MapEntry(:key, :value) in properties.entries) key: value.toJson()},
+        if (requiredProperties case final requiredProperties?) 'required': requiredProperties
       };
 }
 
